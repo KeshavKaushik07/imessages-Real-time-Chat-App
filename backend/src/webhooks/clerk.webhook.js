@@ -1,6 +1,6 @@
 import express from 'express';
-import userModel from '../model/user.model';
-import { verifywebhook } from '@clerk/express';
+import userModel from '../model/user.model.js';
+import { verifyWebhook } from '@clerk/backend/webhooks';
 
 const router = express.Router();
 
