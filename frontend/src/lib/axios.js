@@ -16,6 +16,7 @@ export const setTokenGetter = (fn) => {
 
 axiosInstance.interceptors.request.use(async (config) => {
 //   console.log("Interceptor running");
+console.log("Interceptor:", !!getTokenFn);
 
   if (getTokenFn) {
     const token = await getTokenFn();
