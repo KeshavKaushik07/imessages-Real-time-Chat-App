@@ -28,6 +28,12 @@ function mapUserToConversation({ user, messages, authUser, onlineUsers }) {
     videoUrl: message.video,
   }));
 
+  console.log({
+  selectedUserId: user._id,
+  onlineUsers,
+  isOnline: onlineUsers.includes(user._id),
+});
+
   return {
     id: user._id,
     peer: {
