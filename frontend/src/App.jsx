@@ -12,32 +12,39 @@ import { Toaster } from 'react-hot-toast'
 import AuthInitializer from './components/auth/AuthInitializer'
 
 function App() {
-  const { isSignedIn, isLoaded, getToken  } = useAuth();
+  const { isSignedIn, isLoaded, getToken } = useAuth();
 
   const clearAuth = useAuthStore(state => state.clearAuth);
   const checkAuth = useAuthStore(state => state.checkAuth);
   const isCheckingAuth = useAuthStore(state => state.isCheckingAuth);
 
-  useEffect(()=>{
-    if(!isLoaded) return;
+  useEffect(() => {
+    if (!isLoaded) return;
 
-    if(isSignedIn) checkAuth();
+    if (isSignedIn) checkAuth();
     else clearAuth();
-  },[checkAuth,clearAuth,isLoaded,isSignedIn]);
+  }, [checkAuth, clearAuth, isLoaded, isSignedIn]);
 
-  if(!isLoaded || (isSignedIn && isCheckingAuth)) return <PageLoader/>
+  // if(!isLoaded || (isSignedIn && isCheckingAuth)) return <PageLoader/>
   return (
     <>
-    <AuthInitializer/>
-      <ThemeProvider>
-        <WallpaperProvider>
-          <Routes>
-            <Route path='/' element={ isSignedIn ? <ChatPage /> : <Navigate to={"/auth"} replace/>} />
-            <Route path='/auth' element={ !isSignedIn ? <AuthPage /> : <Navigate to={"/"} />} />
-          </Routes>
-          <Toaster />
-        </WallpaperProvider>
-      </ThemeProvider>
+      <AuthInitializer />
+      {
+        (!isLoaded || (isSignedIn && isCheckingAuth)) ? (
+          <PageLoader />
+        ) : (
+          <ThemeProvider>
+            <WallpaperProvider>
+              <Routes>
+                <Route path='/' element={isSignedIn ? <ChatPage /> : <Navigate to={"/auth"} replace />} />
+                <Route path='/auth' element={!isSignedIn ? <AuthPage /> : <Navigate to={"/"} />} />
+              </Routes>
+              <Toaster />
+            </WallpaperProvider>
+          </ThemeProvider>
+        )
+      }
+
     </>
   )
 }
