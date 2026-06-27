@@ -16,7 +16,13 @@ export function ThemePresetPicker() {
   return (
     <Modal.Root state={modal}>
       <Modal.Trigger>
-        <Button variant="ghost" size="sm" isIconOnly className="text-foreground">
+        <Button
+          aria-label="Choose accent theme"
+          variant="ghost"
+          size="sm"
+          isIconOnly
+          className="text-foreground"
+        >
           <Palette className="size-5" />
         </Button>
       </Modal.Trigger>
