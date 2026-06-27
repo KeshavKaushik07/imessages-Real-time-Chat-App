@@ -17,20 +17,16 @@ function App() {
   const checkAuth = useAuthStore(state => state.checkAuth);
   const isCheckingAuth = useAuthStore(state => state.isCheckingAuth);
 
-  useEffect(()=>{
+  useEffect(async ()=>{
     if(!isLoaded) return;
 
-    if(isSignedIn) checkAuth();
-    else clearAuth();
-  },[checkAuth,clearAuth,isLoaded,isSignedIn]);
 
-  useEffect(() => {
-  if (isSignedIn) {
-    getToken().then((token) => {
-      console.log("TOKEN:", token);
-    });
-  }
-}, [isSignedIn, getToken]);
+    if(isSignedIn){
+      const token = await getToken();
+      console.log(token);
+     checkAuth(token);
+     }else clearAuth();
+  },[checkAuth,clearAuth,isLoaded,isSignedIn]);
 
   if(!isLoaded || (isSignedIn && isCheckingAuth)) return <PageLoader/>
   return (
